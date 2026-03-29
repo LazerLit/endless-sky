@@ -1,0 +1,266 @@
+# Republic Elections
+
+# The Republic parliament contains many parties, large and small. They tend to form into two main blocs, however, with parties from different regions aligned by political outlook or a common 'enemy'.
+# Names of the current major political blocs in Republic space. The first name is the current ruling bloc, the second is the opposition, and the third is only used to store a value during transitions.
+phrase "republic bloc"
+	word
+		"Moderates"
+		"Traditionalists"
+		"Null"
+
+# The current leader of each bloc, first is the Prime Minister, second is the leader of the Opposition, and third is used to store a value during a transition.
+phrase "political leader"
+	word
+		"Arthur Baker"
+		"Mustafa Kikelomo"
+		"Null"
+
+# Name generator for politicians. Weighted so that males are over-represented.
+phrase "politician"
+	phrase
+		"male names" 6
+		"female names" 1
+	word
+		" "
+	phrase
+		"family names"
+
+
+# Prominent political parties in each region of human space grouped by progressive/conservative.
+phrase "deep progressive parties"
+	word
+		"Placeholder"
+
+phrase "deep conservative parties"
+	word
+		"Research Unbound"
+		"Humanity First"
+
+phrase "dirt belt progressive parties"
+	word
+		"Placeholder"
+
+phrase "dirt belt conservative parties"
+	word
+		"Icebreakers"
+		"Free Trade Party"
+
+phrase "frontier progressive parties"
+	word
+		"Placeholder"
+
+phrase "frontier conservative parties"
+	word
+		"Enhanced Equality Party"
+
+phrase "near earth progressive parties"
+	word
+		"Placeholder"
+
+phrase "near earth conservative parties"
+	word
+		"Unity Party"
+
+phrase "paradise worlds progressive parties"
+	word
+		"Placeholder"
+
+phrase "paradise worlds conservative parties"
+	word
+		"Human Augmentation Collective"
+		"Afterlife Rights"
+
+phrase "syndicate progressive parties"
+	word
+		"Placeholder"
+
+phrase "syndicate conservative parties"
+	word
+		"placeholder"
+
+# Progressive or conservative parties
+phrase "progressive parties"
+	word
+		"deep progressive parties"
+		"dirt belt progressive parties"
+		"frontier progressive parties"
+		"near earth progressive parties"
+		"paradise worlds progressive parties"
+		"syndicate progressive parties"
+
+phrase "conservative parties"
+	word
+		"deep conservative parties"
+		"dirt belt conservative parties"
+		"frontier conservative parties"
+		"near earth conservative parties"
+		"paradise worlds conservative parties"
+		"syndicate conservative parties"
+
+substitutions
+	"<incumbent>" "republic bloc" 1
+	"<prime minister>" "political leader" 1
+	"<opposition>" "republic bloc" 2
+	"<opposition leader>" "political leader" 2
+
+
+# Mission to set up trackable values used in elections.
+# Popularity of each bloc from 1 to 100 can be altered by events or missions. Is used at election time to determine who wins. If it drops too low can trigger an event to change leadership.
+mission "Republic Election Set Up"
+	landing
+	invisible
+	on offer
+		"terms" = 1
+		"incumbent popularity" = 50
+		"opposition popularity" = 50
+		fail
+# For testing only, to be removed.
+		dialog "Republic Election initialised"
+
+# Test missions to add/subtract popularity to/from incumbents/opposition.
+mission "Incumbent popularity increase"
+	job
+	repeat
+	description
+		"Mission to increase incumbent popularity by 10 for testing purposes."
+	on accept
+		"incumbent popularity" + 10
+		dialog "Current incumbent: <incumbent>. Popularity: ?"
+		dialog "Current opposition: <opposition> Popularity: ?"
+		fail
+
+mission "Incumbent popularity decrease"
+	job
+	repeat
+	description
+		"Mission to decrease incumbent popularity by 10 for testing purposes."
+	on accept
+		"incumbent popularity" - 10
+		dialog "Current incumbent: <incumbent>. Popularity: ?"
+		dialog "Current opposition: <opposition> Popularity: ?"
+		fail
+
+mission "Opposition popularity increase"
+	job
+	repeat
+	description
+		"Mission to increase opposition popularity by 10 for testing purposes."
+	on accept
+		"opposition popularity" + 10
+		dialog "Current incumbent: <incumbent>. Popularity: ?"
+		dialog "Current opposition: <opposition> Popularity: ?"
+		fail
+
+mission "Opposition popularity increase"
+	job
+	repeat
+	description
+		"Mission to decrease opposition popularity by 10 for testing purposes."
+	on accept
+		"opposition popularity" - 10
+		dialog "Current incumbent: <incumbent>. Popularity: ?"
+		dialog "Current opposition: <opposition> Popularity: ?"
+		fail
+
+# Election missions which trigger on 1st September every fifth year (or whenever the player lands after that date).
+# Measures relative popularity of each bloc, with a small advantage for the incumbent.
+# The longer a bloc is in power the lower their popularity will go.
+# If a new bloc gains power they get a bump in popularity and the outgoing bloc ?
+mission "Republic Election Incumbent Wins"
+	invisible
+	repeat
+	to offer
+		"day" == 1
+		"month" == 9
+		"year" %5 == 0
+		or
+			"incumbent popularity" >= "opposition popularity"
+	on offer
+		"terms" ++
+		"incumbent popularity" - (10 * "terms")
+		"opposition popularity" + 10
+		# Dialog for testing purposes, to be replaced with something more suitable.
+		dialog
+			"The $<incumbent> coalition has won another term in office."
+		fail
+
+mission "Republic Election Challenger Wins"
+	invisible
+	repeat
+	to offer
+		"day" == 1
+		"month" == 9
+		"year" %5 == 0
+		and
+			"opposition popularity" > "incumbent popularity"
+	on offer
+		"republic bloc" 3 = "republic bloc" 1
+		"republic bloc" 1 = "republic bloc" 2
+		"republic bloc" 2 = "republic bloc" 3
+		"republic bloc" 3 = "Null"
+		"political leader" 3 = "political leader" 1
+		"political leader" 1 = "political leader" 2
+		"political leader" 2 = "political leader" 3
+		"political leader" 3 = "Null"
+		"terms" = 1
+		"transition popularity" = "incumbent popularity"
+		"incumbent popularity" = "opposition popularity" - 10
+		"opposition popularity" = "transition popularity" + 10
+		clear "transition popularity"
+		# Dialog for testing purposes, to be replaced with something more suitable.
+		dialog
+			"The $<incumbent> coalition has won, replacing $<opposition> to govern the Republic."
+		fail
+
+# Checks the level of popularity of the Opposition every six months. If it is too low a new leader is announced and the bloc gains a boost in popularity.
+mission "Republic Opposition New Leader"
+	invisible
+	repeat
+	to offer
+		"day" == 22
+		or
+			"month" == 3
+			"month" == 9
+		and
+			"opposition popularity" <= 30
+	on offer
+		"political leader" 2 = "politician"
+		"opposition popularity" + 10
+		# Dialog for testing purposes, to be replaced with something more suitable.
+		dialog
+			"After a recent bad run, the $<opposition> group have decided that a change is in order and have elected a new leader from amongst their ranks; $<opposition leader>."
+
+
+# Checks the level of popularity of the Incumbents every six months. If it is too low a vote of no confidence is announced.
+mission "Republic Opposition New Leader"
+	invisible
+	repeat
+	to offer
+		"day" == 22
+		or
+			"month" == 6
+			"month" == 12
+		and
+			"incumbent popularity" <= 20
+	on offer
+		# Dialog for testing purposes, to be replaced with something more suitable.
+		dialog
+			"The $<incumbent> coalition, worried about a recent bad showing in the polls and protests on several key worlds, have announced that they will be enacting a vote of no confidence in current Prime Minister, $<prime minister>. The Prime Minister was unavailable for comment."
+
+
+# News items to be added to news.txt
+
+news "conservative political campaigner near earth"
+	location
+		government "Republic"
+		attributes "urban" "near earth" "rich"
+	name
+		word
+			"Campaigner"
+	message
+		word
+			`"`
+		word
+			"Excuse me? Do you know how much money the government has taken from you in 'taxes' lately? They shouldn't get away with it! Vote for ${near earth conservative parties} to take back what is rightfully yours!"
+		word
+			`"`
