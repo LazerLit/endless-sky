@@ -98,10 +98,10 @@ phrase "conservative parties"
 		"syndicate conservative parties"
 
 substitutions
-	"<incumbent>" "republic bloc" 1
-	"<prime minister>" "political leader" 1
-	"<opposition>" "republic bloc" 2
-	"<opposition leader>" "political leader" 2
+	set string "incumbent" "republic bloc" 1
+	set string "prime minister" "political leader" 1
+	set string "opposition" "republic bloc" 2
+	set string "opposition leader" "political leader" 2
 
 
 # Mission to set up trackable values used in elections.
@@ -125,8 +125,7 @@ mission "Incumbent popularity increase"
 		"Mission to increase incumbent popularity by 10 for testing purposes."
 	on accept
 		"incumbent popularity" + 10
-		dialog "Current incumbent: <incumbent>. Popularity: ?"
-		dialog "Current opposition: <opposition> Popularity: ?"
+		dialog "Current incumbent, <incumbent> has gained popularity."
 		fail
 
 mission "Incumbent popularity decrease"
@@ -136,8 +135,7 @@ mission "Incumbent popularity decrease"
 		"Mission to decrease incumbent popularity by 10 for testing purposes."
 	on accept
 		"incumbent popularity" - 10
-		dialog "Current incumbent: <incumbent>. Popularity: ?"
-		dialog "Current opposition: <opposition> Popularity: ?"
+		dialog "Current incumbent, <incumbent> has lost popularity."
 		fail
 
 mission "Opposition popularity increase"
@@ -147,8 +145,7 @@ mission "Opposition popularity increase"
 		"Mission to increase opposition popularity by 10 for testing purposes."
 	on accept
 		"opposition popularity" + 10
-		dialog "Current incumbent: <incumbent>. Popularity: ?"
-		dialog "Current opposition: <opposition> Popularity: ?"
+		dialog "Current opposition, <opposition> has gained popularity."
 		fail
 
 mission "Opposition popularity increase"
@@ -158,15 +155,14 @@ mission "Opposition popularity increase"
 		"Mission to decrease opposition popularity by 10 for testing purposes."
 	on accept
 		"opposition popularity" - 10
-		dialog "Current incumbent: <incumbent>. Popularity: ?"
-		dialog "Current opposition: <opposition> Popularity: ?"
+		dialog "Current opposition, <opposition> has lost popularity."
 		fail
 
 # Election missions which trigger on 1st September every fifth year (or whenever the player lands after that date).
 # Measures relative popularity of each bloc, with a small advantage for the incumbent.
 # The longer a bloc is in power the lower their popularity will go.
-# If a new bloc gains power they get a bump in popularity and the outgoing bloc ?
-mission "Republic Election Incumbent Wins"
+# If a new bloc gains power they get a slight dip in popularity and the outgoing bloc gets a bump.
+mission "Republic Election Moderates Win"
 	invisible
 	repeat
 	to offer
@@ -174,14 +170,24 @@ mission "Republic Election Incumbent Wins"
 		"month" == 9
 		"year" %5 == 0
 		or
-			"incumbent popularity" >= "opposition popularity"
+			and
+				<incumbent> = "Moderates"
+				"incumbent popularity" >= "opposition popularity"
+			and
+				<incumbent> = "Traditionalists"
+				"incumbent popularity" < "opposition popularity"
 	on offer
-		"terms" ++
-		"incumbent popularity" - (10 * "terms")
-		"opposition popularity" + 10
+		"incumbent popularity" >= "opposition popularity"
+			"terms" ++
+			"incumbent popularity" - (10 * "terms")
+			"opposition popularity" + 10
+		"incumbent popularity" < "opposition popularity"
+			set "terms"
+			set string "incumbent" "Moderates"
+			set string "opposition" "terms"
 		# Dialog for testing purposes, to be replaced with something more suitable.
 		dialog
-			"The $<incumbent> coalition has won another term in office."
+			"The <incumbent> coalition has won another term in office."
 		fail
 
 mission "Republic Election Challenger Wins"
@@ -191,8 +197,7 @@ mission "Republic Election Challenger Wins"
 		"day" == 1
 		"month" == 9
 		"year" %5 == 0
-		and
-			"opposition popularity" > "incumbent popularity"
+		"opposition popularity" > "incumbent popularity"
 	on offer
 		"republic bloc" 3 = "republic bloc" 1
 		"republic bloc" 1 = "republic bloc" 2
@@ -209,7 +214,7 @@ mission "Republic Election Challenger Wins"
 		clear "transition popularity"
 		# Dialog for testing purposes, to be replaced with something more suitable.
 		dialog
-			"The $<incumbent> coalition has won, replacing $<opposition> to govern the Republic."
+			"The <incumbent> coalition has won, replacing the <opposition> to govern the Republic."
 		fail
 
 # Checks the level of popularity of the Opposition every six months. If it is too low a new leader is announced and the bloc gains a boost in popularity.
