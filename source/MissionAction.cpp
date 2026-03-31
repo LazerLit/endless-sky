@@ -125,6 +125,13 @@ void MissionAction::LoadSingle(const DataNode &child, const ConditionsStore *pla
 		runsWhenFailed = true;
 	else
 		action.LoadSingle(child, playerConditions);
+	// Set a named string variable in the player's conditions store.
+	// Syntax: `set string "variable name" "value"`
+	// Setting to an empty string removes the variable.
+	else if(key == "set string" && child.Size() >= 3)
+    	stringActions.emplace_back(child.Token(1), child.Token(2));
+	else if(key == "clear string" && hasValue)
+    	stringActions.emplace_back(child.Token(1), "");
 }
 
 
@@ -168,6 +175,14 @@ void MissionAction::SaveBody(DataWriter &out) const
 		conversation->Save(out);
 	for(const auto &it : requiredOutfits)
 		out.Write("require", it.first->TrueName(), it.second);
+	// Write out any string variable assignments.
+	for(const auto &it : stringActions)
+	{
+   	 if(it.second.empty())
+    	    out.Write("clear string", it.first);
+ 	   else
+     	   out.Write("set string", it.first, it.second);
+	}
 
 	action.Save(out);
 }
@@ -309,6 +324,10 @@ bool MissionAction::RequiresGiftedShip(const string &shipId) const
 void MissionAction::Do(PlayerInfo &player, UI *ui, const Mission *caller, const System *destination,
 	const shared_ptr<Ship> &ship, const bool isUnique) const
 {
+	// Apply string variable assignments before any dialog or UI actions.
+	for(const auto &it : stringActions)
+    	player.Conditions().SetString(it.first, it.second);
+	
 	if(ui)
 	{
 		bool isOffer = (trigger == "offer");
@@ -330,8 +349,10 @@ void MissionAction::Do(PlayerInfo &player, UI *ui, const Mission *caller, const 
 			map<string, string> subs;
 			GameData::GetTextReplacements().Substitutions(subs);
 			player.AddPlayerSubstitutions(subs);
+			// Include string variables so they can be referenced in dialog text.
+			player.Conditions().AddStringSubstitutions(subs);
 			string text = Format::Replace(dialog.Text(), subs);
-
+			
 			// Don't push the dialog text if this is a visit action on a nonunique
 			// mission; on visit, nonunique dialogs are handled by PlayerInfo as to
 			// avoid the player being spammed by dialogs if they have multiple
