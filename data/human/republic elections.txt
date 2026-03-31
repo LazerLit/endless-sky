@@ -1,19 +1,6 @@
 # Republic Elections
 
 # The Republic parliament contains many parties, large and small. They tend to form into two main blocs, however, with parties from different regions aligned by political outlook or a common 'enemy'.
-# Names of the current major political blocs in Republic space. The first name is the current ruling bloc, the second is the opposition, and the third is only used to store a value during transitions.
-phrase "republic bloc"
-	word
-		"Moderates"
-		"Traditionalists"
-		"Null"
-
-# The current leader of each bloc, first is the Prime Minister, second is the leader of the Opposition, and third is used to store a value during a transition.
-phrase "political leader"
-	word
-		"Arthur Baker"
-		"Mustafa Kikelomo"
-		"Null"
 
 # Name generator for politicians. Weighted so that males are over-represented.
 phrase "politician"
@@ -98,10 +85,22 @@ phrase "conservative parties"
 		"syndicate conservative parties"
 
 substitutions
-	set string "incumbent" "republic bloc" 1
-	set string "prime minister" "political leader" 1
-	set string "opposition" "republic bloc" 2
-	set string "opposition leader" "political leader" 2
+	"<incumbent>" "<bloc 1>"
+		"bloc in power" == 1
+	"<incumbent>" "<bloc 2>"
+		"bloc in power" == 2
+	"<prime minister>" "<leader 1>"
+		"bloc in power" == 1
+	"<prime minister>" "<leader 2>"
+		"bloc in power" == 2
+	"<opposition>" "<bloc 2>"
+		"bloc in power" == 1
+	"<opposition>" "<bloc 1>"
+		"bloc in power" == 2
+	"<opposition leader>" "<leader 2>"
+		"bloc in power" == 1
+	"<opposition leader>" "<leader 1>"
+		"bloc in power" == 2
 
 
 # Mission to set up trackable values used in elections.
@@ -110,7 +109,12 @@ mission "Republic Election Set Up"
 	landing
 	invisible
 	on offer
-		"terms" = 1
+		set string "bloc 1" "Moderates"
+		set string "bloc 2" "Traditionalists"
+		set string "leader 1" "Arthur Baker"
+		set string "leader 2" "Mustafa Kikelomo"
+		set "terms"
+		"bloc in power" = 1
 		"incumbent popularity" = 50
 		"opposition popularity" = 50
 		fail
@@ -124,7 +128,7 @@ mission "Incumbent popularity increase"
 	description
 		"Mission to increase incumbent popularity by 10 for testing purposes."
 	on accept
-		"incumbent popularity" + 10
+		"incumbent popularity" += 10
 		dialog "Current incumbent, <incumbent> has gained popularity."
 		fail
 
@@ -134,7 +138,7 @@ mission "Incumbent popularity decrease"
 	description
 		"Mission to decrease incumbent popularity by 10 for testing purposes."
 	on accept
-		"incumbent popularity" - 10
+		"incumbent popularity" -= 10
 		dialog "Current incumbent, <incumbent> has lost popularity."
 		fail
 
@@ -144,7 +148,7 @@ mission "Opposition popularity increase"
 	description
 		"Mission to increase opposition popularity by 10 for testing purposes."
 	on accept
-		"opposition popularity" + 10
+		"opposition popularity" += 10
 		dialog "Current opposition, <opposition> has gained popularity."
 		fail
 
@@ -154,7 +158,7 @@ mission "Opposition popularity increase"
 	description
 		"Mission to decrease opposition popularity by 10 for testing purposes."
 	on accept
-		"opposition popularity" - 10
+		"opposition popularity" -= 10
 		dialog "Current opposition, <opposition> has lost popularity."
 		fail
 
@@ -162,7 +166,7 @@ mission "Opposition popularity increase"
 # Measures relative popularity of each bloc, with a small advantage for the incumbent.
 # The longer a bloc is in power the lower their popularity will go.
 # If a new bloc gains power they get a slight dip in popularity and the outgoing bloc gets a bump.
-mission "Republic Election Moderates Win"
+mission "Republic Election Bloc 1 Wins"
 	invisible
 	repeat
 	to offer
@@ -171,10 +175,41 @@ mission "Republic Election Moderates Win"
 		"year" %5 == 0
 		or
 			and
-				<incumbent> = "Moderates"
+				"bloc in power" == 1
 				"incumbent popularity" >= "opposition popularity"
 			and
-				<incumbent> = "Traditionalists"
+				"bloc in power" == 2
+				"incumbent popularity" < "opposition popularity"
+	on offer
+		"incumbent popularity" >= "opposition popularity"
+			"terms" ++
+			"incumbent popularity" -= (10 * "terms")
+			"opposition popularity" += 10
+		"incumbent popularity" < "opposition popularity"
+			set "terms"
+			"bloc in power" = 1
+			"transition popularity" = "incumbent popularity"
+			"incumbent popularity" = "opposition popularity"
+			"opposition popularity" = "transition popularity"
+			clear "transition popularity"
+		# Dialog for testing purposes, to be replaced with something more suitable.
+		dialog
+			"The <incumbent> coalition has won the election."
+		fail
+
+mission "Republic Election Bloc 2 Wins"
+	invisible
+	repeat
+	to offer
+		"day" == 1
+		"month" == 9
+		"year" %5 == 0
+		or
+			and
+				"bloc in power" == 2
+				"incumbent popularity" >= "opposition popularity"
+			and
+				"bloc in power" == 1
 				"incumbent popularity" < "opposition popularity"
 	on offer
 		"incumbent popularity" >= "opposition popularity"
@@ -183,38 +218,14 @@ mission "Republic Election Moderates Win"
 			"opposition popularity" + 10
 		"incumbent popularity" < "opposition popularity"
 			set "terms"
-			set string "incumbent" "Moderates"
-			set string "opposition" "terms"
+			"bloc in power" = 2
+			"transition popularity" = "incumbent popularity"
+			"incumbent popularity" = "opposition popularity"
+			"opposition popularity" = "transition popularity"
+			clear "transition popularity"
 		# Dialog for testing purposes, to be replaced with something more suitable.
 		dialog
-			"The <incumbent> coalition has won another term in office."
-		fail
-
-mission "Republic Election Challenger Wins"
-	invisible
-	repeat
-	to offer
-		"day" == 1
-		"month" == 9
-		"year" %5 == 0
-		"opposition popularity" > "incumbent popularity"
-	on offer
-		"republic bloc" 3 = "republic bloc" 1
-		"republic bloc" 1 = "republic bloc" 2
-		"republic bloc" 2 = "republic bloc" 3
-		"republic bloc" 3 = "Null"
-		"political leader" 3 = "political leader" 1
-		"political leader" 1 = "political leader" 2
-		"political leader" 2 = "political leader" 3
-		"political leader" 3 = "Null"
-		"terms" = 1
-		"transition popularity" = "incumbent popularity"
-		"incumbent popularity" = "opposition popularity" - 10
-		"opposition popularity" = "transition popularity" + 10
-		clear "transition popularity"
-		# Dialog for testing purposes, to be replaced with something more suitable.
-		dialog
-			"The <incumbent> coalition has won, replacing the <opposition> to govern the Republic."
+			"The <incumbent> coalition has won the election."
 		fail
 
 # Checks the level of popularity of the Opposition every six months. If it is too low a new leader is announced and the bloc gains a boost in popularity.
@@ -226,14 +237,13 @@ mission "Republic Opposition New Leader"
 		or
 			"month" == 3
 			"month" == 9
-		and
-			"opposition popularity" <= 30
+		"opposition popularity" <= 30
 	on offer
-		"political leader" 2 = "politician"
+		set string "leader 2" "politician"
 		"opposition popularity" + 10
 		# Dialog for testing purposes, to be replaced with something more suitable.
 		dialog
-			"After a recent bad run, the $<opposition> group have decided that a change is in order and have elected a new leader from amongst their ranks; $<opposition leader>."
+			"After a recent bad run, the <opposition> group have decided that a change is in order and have elected a new leader from amongst their ranks; <opposition leader>."
 
 
 # Checks the level of popularity of the Incumbents every six months. If it is too low a vote of no confidence is announced.
@@ -248,9 +258,10 @@ mission "Republic Opposition New Leader"
 		and
 			"incumbent popularity" <= 20
 	on offer
+		# To-do: decide whether to randomize the vote weighted by (un)popularity.
 		# Dialog for testing purposes, to be replaced with something more suitable.
 		dialog
-			"The $<incumbent> coalition, worried about a recent bad showing in the polls and protests on several key worlds, have announced that they will be enacting a vote of no confidence in current Prime Minister, $<prime minister>. The Prime Minister was unavailable for comment."
+			"The <incumbent> coalition, worried about a recent bad showing in the polls and protests on several key worlds, have announced that they will be enacting a vote of no confidence in current Prime Minister, <prime minister>. The Prime Minister was unavailable for comment."
 
 
 # News items to be added to news.txt
