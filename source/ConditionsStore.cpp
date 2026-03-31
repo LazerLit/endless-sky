@@ -197,3 +197,32 @@ const ConditionEntry *ConditionsStore::GetEntry(const string &name) const
 	// And otherwise we don't have a match.
 	return nullptr;
 }
+
+
+
+// Retrieve a string variable from storage. Unlike integer conditions,
+// string variables have no derived/provider mechanism; they are always
+// primary values set directly by missions or other game events.
+std::string ConditionsStore::GetString(const string &name) const
+{
+    auto it = stringStorage.find(name);
+    return (it != stringStorage.end()) ? it->second : "";
+}
+
+// Set a string variable in storage. Setting to an empty string removes
+// the entry entirely, consistent with how zero-value integer conditions
+// are not persisted.
+void ConditionsStore::SetString(const string &name, const string &value)
+{
+    if(value.empty())
+        stringStorage.erase(name);
+    else
+        stringStorage[name] = value;
+}
+
+// Check whether a string variable with the given name currently exists
+// and has a non-empty value.
+bool ConditionsStore::HasString(const string &name) const
+{
+    return stringStorage.count(name) > 0;
+}
