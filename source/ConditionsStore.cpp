@@ -233,3 +233,11 @@ bool ConditionsStore::HasString(const string &name) const
 {
     return stringStorage.count(name) > 0;
 }
+
+// Dump all variables string variables into the subs map with angle-bracket
+// wrapping.
+void ConditionsStore::AddStringSubstitutions(map<string, string> &subs) const
+{
+    for(const auto &it : stringStorage)
+        subs["<" + it.first + ">"] = it.second;
+}
