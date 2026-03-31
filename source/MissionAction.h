@@ -99,4 +99,7 @@ private:
 
 	// Tasks this mission action performs, such as modifying accounts, inventory, or conditions.
 	GameAction action;
+
+	// String variable assignments to apply when this action fires.
+	std::vector<std::pair<std::string, std::string>> stringActions;
 };
