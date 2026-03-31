@@ -70,6 +70,16 @@ public:
 	// Helper for testing; check how many primary conditions are registered.
 	int64_t PrimariesSize() const;
 
+	// Retrieve a string variable by name, returns empty string if not found.
+    std::string GetString(const std::string &name) const;
+
+	// Set a string variable. Setting to empty string removes it.
+    void SetString(const std::string &name, const std::string &value);
+
+	// Check whether a named string variable exists in this store.
+    bool HasString(const std::string &name) const;
+    
+
 
 private:
 	// Retrieve a condition entry based on a condition name, the entry doesn't
@@ -81,5 +91,5 @@ private:
 
 private:
 	// Storage for both the primary conditions as well as the providers.
-	std::map<std::string, ConditionEntry> storage;
+	std::map<std::string, std::string> stringStorage;
 };
