@@ -78,6 +78,9 @@ public:
 
 	// Check whether a named string variable exists in this store.
     bool HasString(const std::string &name) const;
+
+	// Allow phrase substitutions in strings.
+	void AddStringSubstitutions(std::map<std::string, std::string> &subs) const;
     
 
 
@@ -91,5 +94,6 @@ private:
 
 private:
 	// Storage for both the primary conditions as well as the providers.
+	std::map<std::string, ConditionEntry> storage;
 	std::map<std::string, std::string> stringStorage;
 };
