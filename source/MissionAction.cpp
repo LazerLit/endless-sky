@@ -129,7 +129,7 @@ void MissionAction::LoadSingle(const DataNode &child, const ConditionsStore *pla
 	// Syntax: `set string "variable name" "value"`
 	// Setting to an empty string removes the variable.
 	else if(key == "set string" && child.Size() >= 3)
-    	stringActions.emplace_back(child.Token(1), Phrase::ExpandPhrases(child.Token(2)));
+    	stringActions.emplace_back(child.Token(1), child.Token(2));
 	else if(key == "clear string" && hasValue)
     	stringActions.emplace_back(child.Token(1), "");
 }
