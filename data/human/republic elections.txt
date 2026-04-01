@@ -166,66 +166,82 @@ mission "Opposition popularity increase"
 # Measures relative popularity of each bloc, with a small advantage for the incumbent.
 # The longer a bloc is in power the lower their popularity will go.
 # If a new bloc gains power they get a slight dip in popularity and the outgoing bloc gets a bump.
-mission "Republic Election Bloc 1 Wins"
+mission "Republic Election Bloc 1 Elected"
 	invisible
 	repeat
 	to offer
 		"day" == 1
 		"month" == 9
 		"year" %5 == 0
-		or
-			and
-				"bloc in power" == 1
-				"incumbent popularity" >= "opposition popularity"
-			and
-				"bloc in power" == 2
-				"incumbent popularity" < "opposition popularity"
-	on offer
-		"incumbent popularity" >= "opposition popularity"
-			"terms" ++
-			"incumbent popularity" -= (10 * "terms")
-			"opposition popularity" += 10
+		"bloc in power" == 2
 		"incumbent popularity" < "opposition popularity"
-			set "terms"
-			"bloc in power" = 1
-			"transition popularity" = "incumbent popularity"
-			"incumbent popularity" = "opposition popularity"
-			"opposition popularity" = "transition popularity"
-			clear "transition popularity"
+	on offer
+		set "terms"
+		"bloc in power" = 1
+		"transition popularity" = "incumbent popularity"
+		"incumbent popularity" = "opposition popularity"
+		"opposition popularity" = "transition popularity"
+		clear "transition popularity"
 		# Dialog for testing purposes, to be replaced with something more suitable.
 		dialog
 			"The <incumbent> coalition has won the election."
 		fail
 
-mission "Republic Election Bloc 2 Wins"
+mission "Republic Election Bloc 1 Re-elected"
 	invisible
 	repeat
 	to offer
 		"day" == 1
 		"month" == 9
 		"year" %5 == 0
-		or
-			and
-				"bloc in power" == 2
-				"incumbent popularity" >= "opposition popularity"
-			and
-				"bloc in power" == 1
-				"incumbent popularity" < "opposition popularity"
-	on offer
+		"bloc in power" == 1
 		"incumbent popularity" >= "opposition popularity"
-			"terms" ++
-			"incumbent popularity" - (10 * "terms")
-			"opposition popularity" + 10
+	on offer
+		"terms" ++
+		"incumbent popularity" -= (10 * "terms")
+		"opposition popularity" += 10
+		# Dialog for testing purposes, to be replaced with something more suitable.
+		dialog
+			"The <incumbent> coalition has won another term."
+		fail
+
+mission "Republic Election Bloc 2 Elected"
+	invisible
+	repeat
+	to offer
+		"day" == 1
+		"month" == 9
+		"year" %5 == 0
+		"bloc in power" == 1
 		"incumbent popularity" < "opposition popularity"
-			set "terms"
-			"bloc in power" = 2
-			"transition popularity" = "incumbent popularity"
-			"incumbent popularity" = "opposition popularity"
-			"opposition popularity" = "transition popularity"
-			clear "transition popularity"
+	on offer
+		set "terms"
+		"bloc in power" = 2
+		"transition popularity" = "incumbent popularity"
+		"incumbent popularity" = "opposition popularity"
+		"opposition popularity" = "transition popularity"
+		clear "transition popularity"
 		# Dialog for testing purposes, to be replaced with something more suitable.
 		dialog
 			"The <incumbent> coalition has won the election."
+		fail
+
+mission "Republic Election Bloc 2 Re-elected"
+	invisible
+	repeat
+	to offer
+		"day" == 1
+		"month" == 9
+		"year" %5 == 0
+		"bloc in power" == 2
+		"incumbent popularity" >= "opposition popularity"
+	on offer
+		"terms" ++
+		"incumbent popularity" -= (10 * "terms")
+		"opposition popularity" += 10
+		# Dialog for testing purposes, to be replaced with something more suitable.
+		dialog
+			"The <incumbent> coalition has won another term."
 		fail
 
 # Checks the level of popularity of the Opposition every six months. If it is too low a new leader is announced and the bloc gains a boost in popularity.
@@ -247,7 +263,7 @@ mission "Republic Opposition New Leader"
 
 
 # Checks the level of popularity of the Incumbents every six months. If it is too low a vote of no confidence is announced.
-mission "Republic Opposition New Leader"
+mission "Republic Incumbent No Confidence"
 	invisible
 	repeat
 	to offer
