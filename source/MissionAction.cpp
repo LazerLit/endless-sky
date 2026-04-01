@@ -29,6 +29,7 @@ this program. If not, see <https://www.gnu.org/licenses/>.
 #include "Ship.h"
 #include "TextReplacements.h"
 #include "UI.h"
+#include "Phrase.h"
 
 using namespace std;
 
@@ -123,8 +124,6 @@ void MissionAction::LoadSingle(const DataNode &child, const ConditionsStore *pla
 	}
 	else if(key == "can trigger after failure")
 		runsWhenFailed = true;
-	else
-		action.LoadSingle(child, playerConditions);
 	// Set a named string variable in the player's conditions store.
 	// Syntax: `set string "variable name" "value"`
 	// Setting to an empty string removes the variable.
@@ -132,6 +131,8 @@ void MissionAction::LoadSingle(const DataNode &child, const ConditionsStore *pla
     	stringActions.emplace_back(child.Token(1), child.Token(2));
 	else if(key == "clear string" && hasValue)
     	stringActions.emplace_back(child.Token(1), "");
+	else
+		action.LoadSingle(child, playerConditions);
 }
 
 
