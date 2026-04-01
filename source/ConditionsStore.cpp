@@ -57,13 +57,16 @@ void ConditionsStore::Load(const DataNode &node)
 	for(const DataNode &child : node)
 	{
 		const string &key = child.Token(0);
-		if(!DataNode::IsConditionName(key))
-			child.PrintTrace("Invalid condition during savegame-load:");
-		Set(key, (child.Size() >= 2) ? child.Value(1) : 1);
+		// String variables are stored as `string "key" "value"` in save files.
+		if(key == "string" && child.Size() >= 3)
+			SetString(child.Token(1), child.Token(2));
+		else
+		{
+			if(!DataNode::IsConditionName(key))
+				child.PrintTrace("Invalid condition during savegame-load:");
+			Set(key, (child.Size() >= 2) ? child.Value(1) : 1);
+		}
 	}
-	// String variables are stored as `string "key" "value"` in save files.
-	if(child.Token(0) == "string" && child.Size() >= 3)
-    SetString(child.Token(1), child.Token(2));
 }
 
 
@@ -89,7 +92,7 @@ void ConditionsStore::Save(DataWriter &out) const
 	// Write string variables using a distinct keyword to avoid collision
 	// with integer condition names.
 	for(const auto &it : stringStorage)
-  	  out.Write("string", it.first, it.second);
+		out.Write("string", it.first, it.second);
 	out.EndChild();
 }
 
