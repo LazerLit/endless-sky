@@ -326,8 +326,7 @@ void MissionAction::Do(PlayerInfo &player, UI *ui, const Mission *caller, const 
 {
 	// Apply string variable assignments before any dialog or UI actions.
 	for(const auto &it : stringActions)
-    	player.Conditions().SetString(it.first, it.second);
-	
+    	player.Conditions().SetString(it.first, Phrase::ExpandPhrases(it.second));
 	if(ui)
 	{
 		bool isOffer = (trigger == "offer");
