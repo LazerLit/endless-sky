@@ -598,7 +598,7 @@ mission "Unfettered Sea Scorpion Shakedown"
 			label agree
 			`	She nods once and looks back at her screen.`
 			`	"They would have come down somewhere around here," she says, indicating a point on the map which consists mostly of ocean. At least there won't be any locals around. Land on Cloudfire and I'll set up a search pattern."`
-				fail # Maybe this is not the best way to do this, I realised that there won't be an active mission again until the player lands on Cloudfire. Also, maybe there are other ways to fail the mission which I haven't thought of.
+				fail # Maybe this is not the best way to do this, I realized that there won't be an active mission again until the player lands on Cloudfire. Also, maybe there are other ways to fail the mission which I haven't thought of.
 			
 			label return
 			`	"If that's your decision I'll be in my cabin, Frusreep says, swishing past you on her way out."`
