@@ -502,12 +502,12 @@ mission "Unfettered Sea Scorpion Shakedown"
 	description "Frusreep needs you to take her to Wah Ki to record some scans of the new Sea Scorpions in action."
 	minor
 	passengers 1
-	cargo 1
+	cargo 1 # Should this have a name, like 'Monitoring Gear'?
 	source
 		attributes "unfettered"
 	infiltrating
-	destination <origin> # Is this how you do this, so that the mission completes on return?
-	waypoint Wah Ki
+	# destination <origin> Commenting this out for now because <origin> is wrong. How do you set up a mission which has a waypoint and then returns to the planet it was started on?
+	waypoint "Wah Ki"
 	to offer
 		has "Unfettered Jump Drive 1: done"
 		random < 40 # This will need adjusted.
