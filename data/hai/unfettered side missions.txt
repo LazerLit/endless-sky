@@ -493,3 +493,132 @@ mission "Undeserved Anomalocaris"
 				take ship "Anomalocaris"
 			`	The leader of the Unfettered group then has a few of them escort you to the edge of the spaceport. On your way there, some of them seemed to be holding back some frustration, and you could have sworn one wanted to attack you at any moment. Eventually you are lead to a landed Lightning Bug, and after some messy paperwork, the Unfettered leave it with you.`
 				decline
+
+
+
+mission "Unfettered Sea Scorpion Shakedown"
+	autosave
+	name "Transport Unfettered Engineer"
+	description "Frusreep needs you to take her to Wah Ki to record some scans of the new Sea Scorpions in action."
+	minor
+	passengers 1
+	cargo 1
+	source
+		attributes "unfettered"
+	infiltrating
+	destination <origin> # Is this how you do this, so that the mission completes on return?
+	waypoint Wah Ki
+	to offer
+		has "Unfettered Jump Drive 1: done"
+		random < 40 # This will need adjusted.
+	on offer
+		conversation
+			`The spaceport is alive with the hustle and bustle of countless Hai, each going about their business and showing no sign of having noticed you other than the empty space which opens up around you wherever you go. Many of the Hai seem to be chittering away to themselves, the combined sound washing over you like white noise. You take a deep breath, savoring the spiced aroma which carries on the wind, then turn around to find a small Hai standing right at your heels who is literally bouncing on the spot.`
+			`	"Finally!" She says, rocking back on her feet a little to look up into your face. "I thought I would have to jump on your back to get your attention!"`
+			`	You take a moment to look over the newcomer, noticing her chipped front tooth and a spattering of small burn marks on her snout. Like most unfettered she is carrying a sidearm, but her holster is buttoned up and she doesn't appear to be threatening you.`
+				choice
+					`	"Well you have my attention now. How can I help you?"`
+						goto pitch
+					`	"Why didn't you just tug my elbow or something?"`
+			`	She visibly shudders, the motion starting at her snout and running down her body.`
+			`	"I didn't want to..." she trails off. "I mean, I have nothing against humans but you're so... bald."`
+			`	Before you have a chance to respond she covers her mouth with her hands and jumps back, her tail getting in the face of another passing Hai who looks mildly annoyed but keeps walking.`
+			`	"Can we start again?" She asks. "My name is Frusreep, I am an engineer working on the Sea Scorpion project and I would like to hire you for an easy job."`
+				choice
+					`	"I don't know."`
+					`	"'Easy', huh?"`
+					`	"Why didn't you say so? The <ship> is right this way."`
+						goto easy
+						
+			label pitch
+			`	"It's just a short mission," she says quickly. "No risk, a few days and its done. You know the Sea Scorpions? You must have seen them around, they're beautiful ships. Well, I helped design them. I don't mean that as a brag, I was just part of the team... Anyway, not important. I need to gather some data to see how they do in combat, so we can make some tweaks, you know? The thing is, it is hard to focus when there are a thousand trackers bearing down on you, so I thought it would be good to book passage with someone, you know, neutral."`
+			
+			label easy
+			`	"It's just me and some equipment, fly out to Wah Ki, give me some time to take my readings and then return here."`
+				choice
+					`"Okay, let's get going."`
+						accept
+					`"I don't think so. Find somebody else."`
+						decline
+						
+		log "Minor People" "Frusreep" `A chatty Unfettered engineer who works on the Sea Scorpion design team. She hired me to take her out to Wah Ki so she could scan some Sea Scorpions during a real battle.`
+						
+	on enter Wah Ki
+		conversation # Maybe insert a conditional part if you are flying a Sea Scorpion.
+			`Frusreep turns out to be pretty good company, chatting away amiably about any subject, but also happy to give you some space when you need it. She connects her equipment up to your scanners on the journey out, so that as soon as you emerge in Wah Ki she is ready to start recording.`
+			`	"So I just need to find a good candidate..." she says, scrolling down a list of ships faster than you can follow. "Here's one. Oh, it has a FL serial number, so it was built on our new line on Firelode! It'll be good to see if there's any variance in its engine output with the local flow valves!"`
+			`	One ship gets highlighted from the swarm, apparently already engaging in an attack run against a Geocoris, which is gunning its engines and attempting to angle away from the threat. Frusreep zooms in on the action just in time to see a volley of trackers launching, overwhelming the freighter's antimissile fire and slamming into their target.`
+			`	"Woohoo!" Frusreep yelps. "That's what we like to see!"`
+				choice
+					`"Isn't a scientist supposed to be impartial?"`
+					`"I thought you were tracking the performance of the ship, not the missiles."`
+						goto rebuke
+					`"Let me know when you have enough data."`
+						goto end
+			`	Frusreep twists in her chair to give you a nasty scowl.`
+			`	"Scientist?" She asks coldly. "Call me that again and you and I will be having a duel. I'm an engineer! And no, we don't need to be impartial."`
+				goto end
+			
+			label rebuke
+			`	Frusreep just shrugs the rebuke off.`
+			`	"I can multitask you know."`
+			
+			label end
+			`	You remain far outside the combat zone to avoid getting caught by a stray explosion as Frusreep tags one ship after another, feeding the data into her recording gear with practiced ease. For the twentieth time you watch her scrolling down the list of ships, but then she seems to freeze and the fur on the back of her neck stands on end.`
+			`	Looking closer at the screen, you see that she has tagged a Shield Beetle which seems to be in trouble. Its starboard steering thruster is out and it is careening fast into the atmosphere of <destination>.`
+			`	"What's wrong?" You ask, but Frusreep doesn't seem to hear you. You both watch as the Shield Beetle is wreathed in plasma as it dives uncontrolled into the atmosphere.`
+			`	"No," Frusreep whispers, her voice like the mewl of a distressed kitten. "It can't have been, I must have made a mistake."`
+			`	"Frusreep," you say louder. "What's going on?"`
+			`	She looks in the direction of your voice but you get the impression that she doesn't really see you. She seems suddenly more child-like. Afraid.`
+			`	"It's..." She takes a breath and regains some control. "I think that was my mother's ship. Wait, I need to check. I have to be sure."`
+			`	Tweaking the controls with incredible precision, she brings up her recording and highlights the name of the crashed vessel. Mon e Loh.`
+			`	"It's a common enough ship name," she says. "Maybe it's not..."`
+			`	She scrolls back through the recording until she finds the last time that the Mon e Loh anti-missile turrets fired, looping a tenth of a second of footage in ultra slow motion.`
+			`	"It's her alright," she says, sounding resigned now. "I helped install an extra set of supercapacitors to keep the Bullfrogs firing."`
+			`	She scrolls forward once again, watching the final moments as the Mon e Loh starts to tumble.`
+			`	"Wait," she says, peering closer and looping the video. "There. The starboard thrusters are firing. She must have fixed them!"`
+			`	She turns to you, hope glimmering in her eyes.`
+			`	"Captain, they might still be alive! Please... help me look for them."`
+				choice
+					`"That's not what you paid me for. We head back to <origin>."`
+					`"Are you sure?"`
+						goto agree
+					`"Of course. If there's any chance at all we'll find them."`
+						goto agree
+
+			
+			label sticktotheplan
+			`	Frusreep stares at you, her hand twitching near her weapon. For several long moments everything is still and then she seems to deflate.`
+			`	It's your ship, captain, she says dejectedly. If you're not brave enough to help I'll just need to find someone on <origin> who is.`
+				choice
+					`"That sounds like your best option."`
+						goto return
+					`"Well, okay then. I'll do it."`
+				
+			label agree
+			`	She nods once and looks back at her screen.`
+			`	"They would have come down somewhere around here," she says, indicating a point on the map which consists mostly of ocean. At least there won't be any locals around. Land on Cloudfire and I'll set up a search pattern."`
+				fail # Maybe this is not the best way to do this, I realised that there won't be an active mission again until the player lands on Cloudfire. Also, maybe there are other ways to fail the mission which I haven't thought of.
+			
+			label return
+			`	"If that's your decision I'll be in my cabin, Frusreep says, swishing past you on her way out."`
+			`	"A contract is a contract," you remind her as she goes, but she gives no indication of having heard you.`
+	
+	on complete
+		conversation
+			`	You land back on <origin>, and by the time you have finished your post-flight checklist Frusreep has gathered up her gear and is making her way out of the <ship>. She sees you watching her and turns away without a word.`
+		payment 50000 # Does this seem like a reasonable amount?
+
+
+
+mission "Unfettered Rescue"
+	autosave
+	name "Rescue the Mon e Loh"
+	description "Find and rescue the Mon e Loh, which crash-landed on <origin>."
+	source Cloudfire
+	landing
+	to offer
+		has "Unfettered Sea Scorpion Shakedown: failed"
+
+
+# To-do; add Shield Beetle 'Mon e Loh' with extra Supercapacitors.
