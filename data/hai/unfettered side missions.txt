@@ -499,14 +499,13 @@ mission "Undeserved Anomalocaris"
 mission "Unfettered Sea Scorpion Shakedown"
 	autosave
 	name "Transport Unfettered Engineer"
-	description "Frusreep needs you to take her to Wah Ki to record some scans of the new Sea Scorpions in action."
+	description "Mera needs you to take her to Wah Ki to record some scans of the new Sea Scorpions in action."
 	minor
 	passengers 1
-	cargo 1 # Should this have a name, like 'Monitoring Gear'?
+	cargo 1
 	source
 		attributes "unfettered"
 	infiltrating
-	# destination <origin> Commenting this out for now because <origin> is wrong. How do you set up a mission which has a waypoint and then returns to the planet it was started on?
 	waypoint "Wah Ki"
 	to offer
 		has "Unfettered Jump Drive 1: done"
@@ -523,7 +522,7 @@ mission "Unfettered Sea Scorpion Shakedown"
 			`	She visibly shudders, the motion starting at her snout and running down her body.`
 			`	"I didn't want to..." she trails off. "I mean, I have nothing against humans but you're so... bald."`
 			`	Before you have a chance to respond she covers her mouth with her hands and jumps back, her tail getting in the face of another passing Hai who looks mildly annoyed but keeps walking.`
-			`	"Can we start again?" She asks. "My name is Frusreep, I am an engineer working on the Sea Scorpion project and I would like to hire you for an easy job."`
+			`	"Can we start again?" She asks. "My name is Mera, I am an engineer working on the Sea Scorpion project and I would like to hire you for an easy job."`
 				choice
 					`	"I don't know."`
 					`	"'Easy', huh?"`
@@ -541,34 +540,34 @@ mission "Unfettered Sea Scorpion Shakedown"
 					`"I don't think so. Find somebody else."`
 						decline
 						
-		log "Minor People" "Frusreep" `A chatty Unfettered engineer who works on the Sea Scorpion design team. She hired me to take her out to Wah Ki so she could scan some Sea Scorpions during a real battle.`
+		log "People" "Mera" `An Unfettered engineer who is interested in ship designs of all kinds. She is easily excited by new technologies and ships, and seems to communicate partly through her body language.`
 						
 	on enter Wah Ki
 		conversation # Maybe insert a conditional part if you are flying a Sea Scorpion.
-			`Frusreep turns out to be pretty good company, chatting away amiably about any subject, but also happy to give you some space when you need it. She connects her equipment up to your scanners on the journey out, so that as soon as you emerge in Wah Ki she is ready to start recording.`
+			`Mera turns out to be pretty good company, chatting away amiably about any subject, but also happy to give you some space when you need it. She connects her equipment up to your scanners on the journey out, so that as soon as you emerge in Wah Ki she is ready to start recording.`
 			`	"So I just need to find a good candidate..." she says, scrolling down a list of ships faster than you can follow. "Here's one. Oh, it has a FL serial number, so it was built on our new line on Firelode! It'll be good to see if there's any variance in its engine output with the local flow valves!"`
-			`	One ship gets highlighted from the swarm, apparently already engaging in an attack run against a Geocoris, which is gunning its engines and attempting to angle away from the threat. Frusreep zooms in on the action just in time to see a volley of trackers launching, overwhelming the freighter's antimissile fire and slamming into their target.`
-			`	"Woohoo!" Frusreep yelps. "That's what we like to see!"`
+			`	One ship gets highlighted from the swarm, apparently already engaging in an attack run against a Geocoris, which is gunning its engines and attempting to angle away from the threat. Mera zooms in on the action just in time to see a volley of trackers launching, overwhelming the freighter's antimissile fire and slamming into their target.`
+			`	"Woohoo!" Mera yelps. "That's what we like to see!"`
 				choice
 					`"Isn't a scientist supposed to be impartial?"`
 					`"I thought you were tracking the performance of the ship, not the missiles."`
 						goto rebuke
 					`"Let me know when you have enough data."`
 						goto end
-			`	Frusreep twists in her chair to give you a nasty scowl.`
+			`	Mera twists in her chair to give you a nasty scowl.`
 			`	"Scientist?" She asks coldly. "Call me that again and you and I will be having a duel. I'm an engineer! And no, we don't need to be impartial."`
 				goto end
 			
 			label rebuke
-			`	Frusreep just shrugs the rebuke off.`
+			`	Mera just shrugs the rebuke off.`
 			`	"I can multitask you know."`
 			
 			label end
-			`	You remain far outside the combat zone to avoid getting caught by a stray explosion as Frusreep tags one ship after another, feeding the data into her recording gear with practiced ease. For the twentieth time you watch her scrolling down the list of ships, but then she seems to freeze and the fur on the back of her neck stands on end.`
+			`	You remain far outside the combat zone to avoid getting caught by a stray explosion as Mera tags one ship after another, feeding the data into her recording gear with practiced ease. For the twentieth time you watch her scrolling down the list of ships, but then she seems to freeze and the fur on the back of her neck stands on end.`
 			`	Looking closer at the screen, you see that she has tagged a Shield Beetle which seems to be in trouble. Its starboard steering thruster is out and it is careening fast into the atmosphere of <destination>.`
-			`	"What's wrong?" You ask, but Frusreep doesn't seem to hear you. You both watch as the Shield Beetle is wreathed in plasma as it dives uncontrolled into the atmosphere.`
-			`	"No," Frusreep whispers, her voice like the mewl of a distressed kitten. "It can't have been, I must have made a mistake."`
-			`	"Frusreep," you say louder. "What's going on?"`
+			`	"What's wrong?" You ask, but Mera doesn't seem to hear you. You both watch as the Shield Beetle is wreathed in plasma as it dives uncontrolled into the atmosphere.`
+			`	"No," Mera whispers, her voice like the mewl of a distressed kitten. "It can't have been, I must have made a mistake."`
+			`	"Mera," you say louder. "What's going on?"`
 			`	She looks in the direction of your voice but you get the impression that she doesn't really see you. She seems suddenly more child-like. Afraid.`
 			`	"It's..." She takes a breath and regains some control. "I think that was my mother's ship. Wait, I need to check. I have to be sure."`
 			`	Tweaking the controls with incredible precision, she brings up her recording and highlights the name of the crashed vessel. Mon e Loh.`
@@ -588,7 +587,7 @@ mission "Unfettered Sea Scorpion Shakedown"
 
 			
 			label sticktotheplan
-			`	Frusreep stares at you, her hand twitching near her weapon. For several long moments everything is still and then she seems to deflate.`
+			`	Mera stares at you, her hand twitching near her weapon. For several long moments everything is still and then she seems to deflate.`
 			`	It's your ship, captain, she says dejectedly. If you're not brave enough to help I'll just need to find someone on <origin> who is.`
 				choice
 					`"That sounds like your best option."`
@@ -598,17 +597,25 @@ mission "Unfettered Sea Scorpion Shakedown"
 			label agree
 			`	She nods once and looks back at her screen.`
 			`	"They would have come down somewhere around here," she says, indicating a point on the map which consists mostly of ocean. At least there won't be any locals around. Land on Cloudfire and I'll set up a search pattern."`
-				fail # Maybe this is not the best way to do this, I realized that there won't be an active mission again until the player lands on Cloudfire. Also, maybe there are other ways to fail the mission which I haven't thought of.
 			
 			label return
-			`	"If that's your decision I'll be in my cabin, Frusreep says, swishing past you on her way out."`
+			`	"If that's your decision I'll be in my cabin, Mera says, swishing past you on her way out."`
 			`	"A contract is a contract," you remind her as she goes, but she gives no indication of having heard you.`
+				set "refused rescue"
 	
 	on complete
 		conversation
-			`	You land back on <origin>, and by the time you have finished your post-flight checklist Frusreep has gathered up her gear and is making her way out of the <ship>. She sees you watching her and turns away without a word.`
-		payment 50000 # Does this seem like a reasonable amount?
-
+			branch refused
+				"refused rescue" = 1
+			
+			# Branch to fire when completing mission after completion of Unfettered Rescue.
+			
+			label refused
+			`	You land back on <origin>, and by the time you have finished your post-flight checklist Mera has gathered up her gear and is making her way out of the <ship>. She sees you watching her and turns away without a word.`
+			action
+				payment 50000 # Does this seem like a reasonable amount?
+				clear "refused rescue"
+			
 
 
 mission "Unfettered Rescue"
@@ -618,7 +625,11 @@ mission "Unfettered Rescue"
 	source Cloudfire
 	landing
 	to offer
-		has "Unfettered Sea Scorpion Shakedown: failed"
+		has "Unfettered Sea Scorpion Shakedown: active"
+
+
+
+
 
 
 # To-do; add Shield Beetle 'Mon e Loh' with extra Supercapacitors.
