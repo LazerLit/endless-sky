@@ -626,7 +626,21 @@ mission "Unfettered Rescue"
 	landing
 	to offer
 		has "Unfettered Sea Scorpion Shakedown: active"
-
+	on offer
+		conversation
+			`You descend into the atmosphere of <source>, Mera navigating as she tries to reconstruct the flightpath of the Mon e Loh. Night is falling, which you think should hamper your search efforts, but Mera is upbeat.`
+			`	"No, this is good," she insists, "lower temperature, much less ambient radiation, it should make any trail they left stand out better."`
+			`	Mera directs you into a long, wide loop, skirting the section of ocean which she had earlier determined to be the most likely area for the Shield Beetle to have come down. The low hum of your engines is the only sound as you follow the course, and outside the clouds fade from bright white, through orange to a delicate pink.`
+			`	"Nothing so far," Mera grumbles, and you see that she is tightly gripping the sides of her display.`
+			choice
+				`	We'll keep looking. We'll find them.`
+				`	Maybe we should try a different strategy?`
+			`	Mera is silent but her grip loosens a little and then she looks up from her screen in thought.`
+			`	"We know they had propulsion," she muses, "so they wouldn't have just kept falling. They would aim for land."`
+			`	She pulls up the map again, this time examining the nearby islands, zooming in and out as she examines each in turn.`
+			`	"Somewhere with fresh water, no local population, and maybe a sheltered bay to splash down in."`
+			`	After a few moments she identifies one and passes the bearing over to your helm. You swing the <ship> around onto the new course, gun the engines, and soon you can see the island breaking up the horizon dead ahead. As you draw closer you see two peaks covered in greenery jutting out of the ocean, with a wide sand bank in the middle which probably splits the island in two at high tide.`
+			`	You circle the island, which looks idyllically picturesque in the dwindiling twilight, but there is no sign of the Mon e Loh.`
 
 
 
