@@ -3179,8 +3179,9 @@ double Ship::DragForce() const
 
 int Ship::RequiredCrew() const
 {
+	// Automatons require no crew but their outfits might.
 	if(attributes.Get("automaton"))
-		return 0;
+		return max<int>(0, attributes.Get("required crew"));
 
 	// Drones do not need crew, but all other ships need at least one.
 	return max<int>(1, attributes.Get("required crew"));
