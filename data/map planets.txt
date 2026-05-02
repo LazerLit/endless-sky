@@ -3281,6 +3281,7 @@ planet Luna
 	tribute 2500
 		threshold 7500
 		fleet "Large Republic" 10
+	hazard "Small Black Hole Gravity"
 
 planet Mabatham
 	attributes "aberrant siege" avgi frontier research
