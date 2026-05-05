@@ -971,7 +971,7 @@ int System::Trade(const string &commodity, const Planet *planet) const
 	auto it = trade.find(commodity);
 	if(it == trade.end())
 		return 0;
-	
+
 	int price = it->second.price;
 	if(planet)
 	{
