@@ -965,11 +965,22 @@ const Sprite *System::Haze() const
 
 
 
-// Get the price of the given commodity in this system.
-int System::Trade(const string &commodity) const
+// Get the price of the given commodity in this system, including any planet modifiers.
+int System::Trade(const string &commodity, const Planet *planet) const
 {
 	auto it = trade.find(commodity);
-	return (it == trade.end()) ? 0 : it->second.price;
+	if(it == trade.end())
+		return 0;
+	
+	int price = it->second.price;
+	if(planet)
+	{
+		const auto &modifiers = planet->TradeModifiers();
+		auto mod = modifiers.find(commodity);
+		if(mod != modifiers.end())
+			price += mod->second;
+	}
+	return price;
 }
 
 
