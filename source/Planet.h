@@ -26,6 +26,7 @@ this program. If not, see <https://www.gnu.org/licenses/>.
 #include <set>
 #include <string>
 #include <vector>
+#include <map>
 
 class ConditionsStore;
 class DataNode;
@@ -87,6 +88,9 @@ public:
 
 	// Get planet's noun descriptor from attributes
 	const std::string &Noun() const;
+
+	// Get the map of trade price modifiers for this planet.
+	const std::map<std::string, int> &TradeModifiers() const;
 
 	// Check whether this planet's port is named.
 	bool HasNamedPort() const;
@@ -205,6 +209,8 @@ private:
 	double security = .25;
 	bool inhabited = false;
 	bool customSecurity = false;
+	// Optional trade modifiers compared to system.
+	std::map<std::string, int> tradeModifiers;
 	// Any required attributes needed to land on this planet.
 	std::set<std::string> requiredAttributes;
 
