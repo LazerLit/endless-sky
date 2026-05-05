@@ -167,7 +167,7 @@ public:
 	const Sprite *Haze() const;
 
 	// Get the price of the given commodity in this system.
-	int Trade(const std::string &commodity) const;
+	int Trade(const std::string &commodity, const Planet *planet = nullptr) const;
 	bool HasTrade() const;
 	// Update the economy. Returns the amount of trade goods this system exports.
 	void StepEconomy();
