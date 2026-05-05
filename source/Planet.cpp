@@ -647,7 +647,7 @@ const Government *Planet::GetGovernment() const
 // Check if this planet has any trade modifiers.
 const map<string, int> &Planet::TradeModifiers() const
 {
-    return tradeModifiers;
+	return tradeModifiers;
 }
 
 
