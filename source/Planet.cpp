@@ -344,16 +344,15 @@ void Planet::Load(const DataNode &node, Set<Wormhole> &wormholes, const Conditio
 			else
 				child.PrintTrace("Skipping unrecognized attribute:");
 		}
-			}
 		else if(key == "trade" && child.Size() >= 3)
-			{
-				const string &commodity = child.Token(1);
-				int modifier = child.Value(2);
-				if(remove)
-					tradeModifiers.erase(commodity);
-				else
-					tradeModifiers[commodity] = modifier;
-			}
+		{
+			const string &commodity = child.Token(1);
+			int modifier = child.Value(2);
+			if(remove)
+				tradeModifiers.erase(commodity);
+			else
+				tradeModifiers[commodity] = modifier;
+		}
 		else
 			child.PrintTrace("Skipping unrecognized attribute:");
 	}
