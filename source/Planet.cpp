@@ -147,6 +147,8 @@ void Planet::Load(const DataNode &node, Set<Wormhole> &wormholes, const Conditio
 				tributeFleetLaunching = nullptr;
 				tributeSurrendered = nullptr;
 			}
+			else if(key == "trade")
+				tradeModifiers.clear();
 			else if(key == "wormhole")
 				wormhole = nullptr;
 			else if(key == "to")
@@ -224,7 +226,6 @@ void Planet::Load(const DataNode &node, Set<Wormhole> &wormholes, const Conditio
 					tributeSurrendered = removeTributePhrase ? nullptr : GameData::Phrases().Get(grand.Token(1));
 				else
 					grand.PrintTrace("Skipping unrecognized attribute:");
-			}
 		}
 		// Handle the attributes which can be "removed."
 		else if(!hasValue)
@@ -343,6 +344,16 @@ void Planet::Load(const DataNode &node, Set<Wormhole> &wormholes, const Conditio
 			else
 				child.PrintTrace("Skipping unrecognized attribute:");
 		}
+			}
+		else if(key == "trade" && child.Size() >= 3)
+			{
+				const string &commodity = child.Token(1);
+				int modifier = child.Value(2);
+				if(remove)
+					tradeModifiers.erase(commodity);
+				else
+					tradeModifiers[commodity] = modifier;
+			}
 		else
 			child.PrintTrace("Skipping unrecognized attribute:");
 	}
@@ -633,6 +644,12 @@ const Government *Planet::GetGovernment() const
 	return government ? government : systems.empty() ? nullptr : GetSystem()->GetGovernment();
 }
 
+
+// Check if this planet has any trade modifiers.
+const map<string, int> &Planet::TradeModifiers() const
+{
+    return tradeModifiers;
+}
 
 
 // You need this good a reputation with this system's government to land here.
