@@ -542,9 +542,9 @@ mission "Unfettered Sea Scorpion Shakedown"
 						decline
 
 			label okay
-			`	She literally jumps up and down on the spot and then turns to hustle towards the <ship>, calling over her shoulder, "I'll install the equipment as we go, it shouldn't be difficult."`
+			`	She does a quick shuffle which could be interpreted as a dance and then turns to hustle towards the <ship>, calling over her shoulder, "I'll install the equipment as we go, it shouldn't be difficult."`
 			accept
-			
+
 		log "People" "Mera" `An Unfettered engineer who is interested in ship designs of all kinds. She is easily excited by new technologies and ships, and seems to communicate partly through her body language.`
 
 	on enter Wah Ki
@@ -572,7 +572,7 @@ mission "Unfettered Sea Scorpion Shakedown"
 		timer 600
 			on timeup
 				`	You remain far outside the combat zone to avoid getting caught by a stray explosion as Mera tags one ship after another, feeding the data into her recording gear with practiced ease. For the twentieth time you watch her scrolling down the list of ships, but then she seems to freeze and the fur on the back of her neck stands on end.`
-				`	Looking closer at the screen, you see that she has tagged a Shield Beetle which seems to be in trouble. Its starboard steering thruster is out and it is careening fast into the atmosphere of <destination>.`
+				`	Looking closer at the screen, you see that she has tagged a Shield Beetle which seems to be in trouble. Its starboard steering thruster is out and it is careening fast into the atmosphere of Cloudfire.`
 				`	"What's wrong?" You ask, but Mera doesn't seem to hear you. You both watch as the Shield Beetle is wreathed in plasma as it dives uncontrolled into the atmosphere.`
 				`	"No," Mera whispers, her voice like the mewl of a distressed kitten. "It can't have been, I must have made a mistake."`
 				`	"Mera," you say louder. "What's going on?"`
@@ -661,7 +661,7 @@ mission "Unfettered Rescue"
 			`	She pulls up the map again, this time examining the nearby islands, zooming in and out as she examines each in turn.`
 			`	"Somewhere with fresh water, no local population, and maybe a sheltered bay to splash down in."`
 			`	After a few moments she identifies one and passes the bearing over to your helm. You swing the <ship> around onto the new course, gun the engines, and soon you can see the island breaking up the horizon dead ahead. As you draw closer you see two peaks covered in greenery jutting out of the ocean, with a wide sand bank in the middle which probably splits the island in two at high tide.`
-			`	You circle the island, which looks idyllically picturesque in the dwindiling twilight, but there is no sign of the Mon e Loh. Mera's frustration is evident by the way she taps her claws against the side of her console, the rhythm getting erver quicker. Suddenly she stops.`
+			`	You circle the island, which looks idyllically picturesque in the dwindiling twilight, but there is no sign of the Mon e Loh. Mera's frustration is evident by the way she taps her claws against the side of her console, the rhythm getting ever quicker. Suddenly she stops.`
 			`	"They're hiding," she says, throwing her head back and spinning her chair in a full circle. "They don't want the Fettered to find them like this!"`
 			choice
 				`	"So how does this help us?"`
@@ -669,4 +669,4 @@ mission "Unfettered Rescue"
 			`	"It's simple," Mera tells you with a playful glint in her eye. "I'll just call my mom."`
 			`	She pulls out a standard communicator and taps it a few times.`
 			`	"What?" she asks you with a smirk. "You thought I was going to remodulate your shield matrix or spoof your IFF? Sometimes the simplest solutions are the best."`
-			`	Ten minutes later, after listening in to a surreal conversation in which Mera and her mother organized a rendezvous as though they were arranging to meet at a cozy tea house instead of an extraction from behind enemy lines, the <ship> was lands on the beach of the island you had circled earlier, while the Mon e Loh rises from the bay like a leviathan.`
+			`	Ten minutes later, after listening in to a surreal conversation in which Mera and her mother organized a rendezvous as though they were arranging to meet at a cozy tea house instead of an extraction from behind enemy lines, the <ship> lands on the beach of the island you had circled earlier, while the Mon e Loh rises from the bay like a leviathan.`
