@@ -505,7 +505,6 @@ mission "Unfettered Sea Scorpion Shakedown"
 	cargo 1
 	source
 		attributes "unfettered"
-	infiltrating
 	waypoint "Wah Ki"
 	to offer
 		has "Unfettered Jump Drive 1: done"
@@ -571,43 +570,44 @@ mission "Unfettered Sea Scorpion Shakedown"
 
 		timer 600
 			on timeup
-				`	You remain far outside the combat zone to avoid getting caught by a stray explosion as Mera tags one ship after another, feeding the data into her recording gear with practiced ease. For the twentieth time you watch her scrolling down the list of ships, but then she seems to freeze and the fur on the back of her neck stands on end.`
-				`	Looking closer at the screen, you see that she has tagged a Shield Beetle which seems to be in trouble. Its starboard steering thruster is out and it is careening fast into the atmosphere of Cloudfire.`
-				`	"What's wrong?" You ask, but Mera doesn't seem to hear you. You both watch as the Shield Beetle is wreathed in plasma as it dives uncontrolled into the atmosphere.`
-				`	"No," Mera whispers, her voice like the mewl of a distressed kitten. "It can't have been, I must have made a mistake."`
-				`	"Mera," you say louder. "What's going on?"`
-				`	She looks in the direction of your voice but you get the impression that she doesn't really see you. She seems suddenly more child-like. Afraid.`
-				`	"It's..." She takes a breath and regains some control. "I think that was my mother's ship. Wait, I need to check. I have to be sure."`
-				`	Tweaking the controls with incredible precision, she brings up her recording and highlights the name of the crashed vessel. Mon e Loh.`
-				`	"It's a common enough ship name," she says. "Maybe it's not..."`
-				`	She scrolls back through the recording until she finds the last time that the Mon e Loh anti-missile turrets fired, looping a tenth of a second of footage in ultra slow motion.`
-				`	"It's her alright," she says, sounding resigned now. "I helped install an extra set of supercapacitors to keep the Bullfrogs firing."`
-				`	She scrolls forward once again, watching the final moments as the Mon e Loh starts to tumble.`
-				`	"Wait," she says, peering closer and looping the video. "There. The starboard thrusters are firing. She must have fixed them!"`
-				`	She turns to you, hope glimmering in her eyes.`
-				`	"Captain, they might still be alive! Please... help me look for them."`
-					choice
-						`"That's not what you're paying me for. We head back to <origin>."`
-						`"Are you sure?"`
-							goto agree
-						`"Of course. If there's any chance at all we'll find them."`
-							goto agree
+				conversation
+					`You remain far outside the combat zone to avoid getting caught by a stray explosion as Mera tags one ship after another, feeding the data into her recording gear with practiced ease. For the twentieth time you watch her scrolling down the list of ships, but then she seems to freeze and the fur on the back of her neck stands on end.`
+					`	Looking closer at the screen, you see that she has tagged a Shield Beetle which seems to be in trouble. Its starboard steering thruster is out and it is careening fast into the atmosphere of Cloudfire.`
+					`	"What's wrong?" You ask, but Mera doesn't seem to hear you. You both watch as the Shield Beetle is wreathed in plasma as it dives uncontrolled into the atmosphere.`
+					`	"No," Mera whispers, her voice like the mewl of a distressed kitten. "It can't have been, I must have made a mistake."`
+					`	"Mera," you say louder. "What's going on?"`
+					`	She looks in the direction of your voice but you get the impression that she doesn't really see you. She seems suddenly more child-like. Afraid.`
+					`	"It's..." She takes a breath and regains some control. "I think that was my mother's ship. Wait, I need to check. I have to be sure."`
+					`	Tweaking the controls with incredible precision, she brings up her recording and highlights the name of the crashed vessel. Mon e Loh.`
+					`	"It's a common enough ship name," she says. "Maybe it's not..."`
+					`	She scrolls back through the recording until she finds the last time that the Mon e Loh anti-missile turrets fired, looping a tenth of a second of footage in ultra slow motion.`
+					`	"It's her alright," she says, sounding resigned now. "I helped install an extra set of supercapacitors to keep the Bullfrogs firing."`
+					`	She scrolls forward once again, watching the final moments as the Mon e Loh starts to tumble.`
+					`	"Wait," she says, peering closer and looping the video. "There. The starboard thrusters are firing. She must have fixed them!"`
+					`	She turns to you, hope glimmering in her eyes.`
+					`	"Captain, they might still be alive! Please... help me look for them."`
+						choice
+							`"That's not what you're paying me for. We head back to <origin>."`
+							`"Are you sure?"`
+								goto agree
+							`"Of course. If there's any chance at all we'll find them."`
+								goto agree
 
-				`	Mera stares at you, her hand twitching near her weapon. For several long moments everything is still and then she seems to deflate.`
-				`	"It's your ship, captain," she says dejectedly. "If you're not brave enough to help I'll just need to find someone on <origin> who is."`
-					choice
-						`"That sounds like your best option."`
-							goto return
-						`"Well, okay then. I'll do it."`
+					`	Mera stares at you, her hand twitching near her weapon. For several long moments everything is still and then she seems to deflate.`
+					`	"It's your ship, captain," she says dejectedly. "If you're not brave enough to help I'll just need to find someone on <origin> who is."`
+						choice
+							`"That sounds like your best option."`
+								goto return
+							`"Well, okay then. I'll do it."`
 
-				label agree
-				`	She nods once and looks back at her screen.`
-				`	"They would have come down somewhere around here," she says, indicating a point on the map which consists mostly of ocean. At least there won't be any locals around. Land on Cloudfire and I'll set up a search pattern."`
+					label agree
+					`	She nods once and looks back at her screen.`
+					`	"They would have come down somewhere around here," she says, indicating a point on the map which consists mostly of ocean. At least there won't be any locals around. Land on Cloudfire and I'll set up a search pattern."`
 
-				label return
-				`	"If that's your decision I'll be in my cabin," Mera says, swishing past you on her way out.`
-				`	"A contract is a contract," you remind her as she goes, but she gives no indication of having heard you.`
-					set "refused rescue"
+					label return
+					`	"If that's your decision I'll be in my cabin," Mera says, swishing past you on her way out.`
+					`	"A contract is a contract," you remind her as she goes, but she gives no indication of having heard you.`
+						set "refused rescue"
 
 	to complete
 		or
@@ -619,7 +619,7 @@ mission "Unfettered Sea Scorpion Shakedown"
 			`You have landed back on <origin> after promising Mera that you would help to find the Mon e Loh, but you have not found the ship yet. Return to Cloudfire to search for survivors.`
 
 	on complete
-		conversation
+		conversation # This seems a bit short to be a conversation but I don't think you can use branches in dialog?
 			branch refused
 				"refused rescue" = 1
 				`	You land back on <origin>, and by the time you have finished your post-flight checklist Mera has disconnected her gear and is making her way out of the <ship>. She sees you watching her and turns away without a word.`
@@ -632,7 +632,7 @@ mission "Unfettered Sea Scorpion Shakedown"
 				# Branch to fire when completing mission after completion of Unfettered Rescue. In this branch Mera will let you keep the value detector and the captain of the Mon e Loh will give you something extra. I'll write this after the rescue mission.
 
 	npc accompany
-		government "Hai (Unfettered)" # I'll neeed to switch this to something neutral, I think.
+		government "Hai (Unfettered Civilians)"
 		personality landing
 		ship "Shield Beetle (Low crew)" "Mon e Loh"
 		system "Wah Ki"
@@ -645,6 +645,7 @@ mission "Unfettered Rescue"
 	description "Find and rescue the Mon e Loh, which crash-landed on <origin>."
 	source Cloudfire
 	landing
+	infiltrating
 	to offer
 		has "Unfettered Sea Scorpion Shakedown: active"
 	on offer
@@ -661,7 +662,7 @@ mission "Unfettered Rescue"
 			`	She pulls up the map again, this time examining the nearby islands, zooming in and out as she examines each in turn.`
 			`	"Somewhere with fresh water, no local population, and maybe a sheltered bay to splash down in."`
 			`	After a few moments she identifies one and passes the bearing over to your helm. You swing the <ship> around onto the new course, gun the engines, and soon you can see the island breaking up the horizon dead ahead. As you draw closer you see two peaks covered in greenery jutting out of the ocean, with a wide sand bank in the middle which probably splits the island in two at high tide.`
-			`	You circle the island, which looks idyllically picturesque in the dwindiling twilight, but there is no sign of the Mon e Loh. Mera's frustration is evident by the way she taps her claws against the side of her console, the rhythm getting ever quicker. Suddenly she stops.`
+			`	You circle the island, which looks idyllically picturesque in the dwindiling twilight, but there is no sign of the Mon e Loh. Mera's taps her claws against the side of her console, the tempo rising along with her frustration. Suddenly she stops.`
 			`	"They're hiding," she says, throwing her head back and spinning her chair in a full circle. "They don't want the Fettered to find them like this!"`
 			choice
 				`	"So how does this help us?"`
@@ -669,4 +670,16 @@ mission "Unfettered Rescue"
 			`	"It's simple," Mera tells you with a playful glint in her eye. "I'll just call my mom."`
 			`	She pulls out a standard communicator and taps it a few times.`
 			`	"What?" she asks you with a smirk. "You thought I was going to remodulate your shield matrix or spoof your IFF? Sometimes the simplest solutions are the best."`
-			`	Ten minutes later, after listening in to a surreal conversation in which Mera and her mother organized a rendezvous as though they were arranging to meet at a cozy tea house instead of an extraction from behind enemy lines, the <ship> lands on the beach of the island you had circled earlier, while the Mon e Loh rises from the bay like a leviathan.`
+			`	Ten minutes later, after listening in to a surreal conversation in which Mera and her mother organize a rendezvous as though they are arranging a meeting at a cozy tea house instead of a rescue mission behind enemy lines, the <ship> lands on the beach of the island you had circled earlier, while the Mon e Loh rises from the bay like a leviathan.`
+			`	Mera, toting a bag of tools and some spare parts she found lying around, marches straight in to the belly of the shield beetle, bustling past some walking wounded Hai who come out to set up a camp on the beach. You chip in, collecting firewood and supplementing their provisions with some of your own, and soon enough you are enjoying the warm breeze over the gently lapping waves, and trying to pick out the stars that you have visited from amongst the myriad sparkling in the sky above., although the effect is somewhat ruined by the loud bangs sporadically echoing out of the Mon e Loh.`
+			`	"Captain <last>?"`
+			`	The voice startles you out of a reverie and you turn to see a venerable Hai with crooked whiskers and silver-grey streaks in his fur. He wears an ornate uniform which, by way of various ribbons and medals, leaves no doubt in your mind that its wearer has seen more than most and is deserving of respect, if not adulation.`
+			choice
+				`	"That's me."`
+				`	"At your service, sir."`
+				`	"Who's asking?"`
+			`	He nods gravely, as though you have just confirmed his worst fears.`
+			`	"I am Captain Pripiam of the Mon e Loh. I wanted to thank you personally for your assistance."`
+			choice
+				`	"I'm just glad I could help."`
+				`	"
