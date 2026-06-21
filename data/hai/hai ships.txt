@@ -1390,6 +1390,30 @@ ship "Shield Beetle" "Shield Beetle (Tripulse Ionic Turret)"
 		`"Bufaer" Atomic Thruster`
 		"Pulse Rifle" 85
 
+ship "Shield Beetle" "Shield Beetle (Crew Destroyed)"
+	crew 30
+	add attributes
+		"bunks" -65
+	outfits
+		"Ion Cannon" 4
+		"Hai Tracker Pod" 4
+		"Hai Tracker" 120
+		"Tracker Storage Pod"
+		"Bullfrog Anti-Missile" 4
+		"Hai Octopus Jammer" 3
+		"Boulder Reactor"
+		"Geode Reactor"
+		"Hai Valley Batteries"
+		"Hai Diamond Regenerator"
+		"Hai Williwaw Cooling" 3
+		"Value Detector" 2
+		"Quantum Keystone"
+		"Pulse Rifle" 65
+		`"Bondir" Atomic Thruster`
+		`"Bufaer" Atomic Steering`
+		"Hyperdrive"
+		"Supercapacitor"
+
 
 
 # Flagship of the Unfettered Hai, filled with the spoils of wars against Korath and Wanderers:
